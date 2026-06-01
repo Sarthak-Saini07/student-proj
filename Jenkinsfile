@@ -2,6 +2,10 @@ pipeline {
 
     agent any
 
+    triggers {
+        pollSCM('H/1 * * * *')
+    }
+
     stages {
 
         stage('Build') {
@@ -26,24 +30,6 @@ pipeline {
             steps {
                 bat 'docker build -t myapp:v1 .'
             }
-        }
-
-    }
-    triggers {
-    pollSCM('H/1 * * * *')
-}
-    post {
-
-        success {
-            echo 'Build successful'
-        }
-
-        failure {
-            echo 'Build failed'
-        }
-
-        always {
-            echo 'Pipeline completed'
         }
 
     }
