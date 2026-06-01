@@ -1,30 +1,49 @@
-pipeline{
+pipeline {
+
     agent any
-    stages{
-        stage('Build'){
-            steps{
+
+    stages {
+
+        stage('Build') {
+            steps {
                 bat 'mvn compile'
             }
         }
-        stage('Test'){
-            bat 'mvn test'
+
+        stage('Test') {
+            steps {
+                bat 'mvn test'
+            }
         }
-        stage('Package'){
-            bat 'mvn package'
+
+        stage('Package') {
+            steps {
+                bat 'mvn package'
+            }
         }
-        stage ('Docker Build'){
-            bat 'docker build -t myapp:v1 .'
+
+        stage('Docker Build') {
+            steps {
+                bat 'docker build -t myapp:v1 .'
+            }
         }
+
     }
-    post{
-        success{
-            echo "Build successful"
+
+    post {
+
+        success {
+            echo 'Build successful'
         }
-        failure{
-            echo "Build is failed"
+
+        failure {
+            echo 'Build failed'
         }
-        always{
-            echo "pipeline completed"
+
+        always {
+            echo 'Pipeline completed'
         }
+
     }
+
 }
